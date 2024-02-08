@@ -15,6 +15,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 public class MotionService extends AccessibilityService {
     private boolean canScroll = true;
     private boolean tikTokInForeground = false;
@@ -27,9 +29,10 @@ public class MotionService extends AccessibilityService {
         super.onServiceConnected();
         Toast.makeText(getApplicationContext(), "Connected!", Toast.LENGTH_SHORT).show();
     }
-    int x,y;
+    int[] location = new int[2];
     boolean continueBool = true;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         Log.d(TAG, "Received event: " + event.toString());
@@ -55,8 +58,7 @@ public class MotionService extends AccessibilityService {
                     Window.counter.setText(String.valueOf(i + 1));
                 }
                 Window.btn1.setOnClickListener(v -> {
-                    x = (int) v.getX();
-                    y = (int) v.getY();
+                    Window.btn1.getLocationOnScreen(location);
                     Window.bottomNavView.setVisibility(View.GONE);
                     new Handler().postDelayed(() -> {
                         clickButton(v);
@@ -66,8 +68,8 @@ public class MotionService extends AccessibilityService {
                     }, 2000);
                 });
                 Window.btn2.setOnClickListener(v -> {
-                    x = (int) v.getX();
-                    y = (int) v.getY();
+                    Window.btn2.getLocationOnScreen(location);
+                    location[0] = location[0] + 50;
                     Window.bottomNavView.setVisibility(View.GONE);
                     new Handler().postDelayed(() -> {
                         clickButton(v);
@@ -77,8 +79,8 @@ public class MotionService extends AccessibilityService {
                     }, 2000);
                 });
                 Window.btn3.setOnClickListener(v -> {
-                    x = (int) v.getX();
-                    y = (int) v.getY();
+                    Window.btn3.getLocationOnScreen(location);
+                    location[0] = location[0] + 50;
                     Window.bottomNavView.setVisibility(View.GONE);
                     new Handler().postDelayed(() -> {
                         clickButton(v);
@@ -88,8 +90,8 @@ public class MotionService extends AccessibilityService {
                     }, 2000);
                 });
                 Window.btn4.setOnClickListener(v -> {
-                    x = (int) v.getX();
-                    y = (int) v.getY();
+                    Window.btn4.getLocationOnScreen(location);
+                    location[0] = location[0] + 50;
                     Window.bottomNavView.setVisibility(View.GONE);
                     new Handler().postDelayed(() -> {
                         clickButton(v);
@@ -99,8 +101,8 @@ public class MotionService extends AccessibilityService {
                     }, 2000);
                 });
                 Window.btn5.setOnClickListener(v -> {
-                    x = (int) v.getX();
-                    y = (int) v.getY();
+                    Window.btn5.getLocationOnScreen(location);
+                    location[0] = location[0] + 50;
                     Window.bottomNavView.setVisibility(View.GONE);
                     new Handler().postDelayed(() -> {
                         clickButton(v);
@@ -113,6 +115,8 @@ public class MotionService extends AccessibilityService {
 
         }
         // TODO  Stop Foreground Service
+        // TODO Home Scroll Only
+        // TODO Counter Visibility off
     }
 
     public void startService() {
@@ -132,8 +136,8 @@ public class MotionService extends AccessibilityService {
 
     public void clickButton(View v){
         Point position = new Point();
-        position.x = getResources().getDisplayMetrics().widthPixels / 2;
-        position.y = getResources().getDisplayMetrics().heightPixels;
+        position.x = location[0];
+        position.y = location[1];
         GestureDescription.Builder builder = new GestureDescription.Builder();
         Path path = new Path();
         path.moveTo(position.x, position.y);

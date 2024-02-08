@@ -4,14 +4,14 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0">
+    android:alpha="0.5">
 
     <Button
         android:id="@+id/btn1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:cornerRadius="12dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:layout_weight="1" />
 
     <Button
@@ -19,7 +19,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:cornerRadius="12dp"
-        android:backgroundTint="@color/black"
+        android:layout_marginHorizontal="3dp"
+        android:backgroundTint="@color/white"
         android:layout_weight="1" />
 
     <Button
@@ -27,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:cornerRadius="12dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:layout_weight="1" />
 
     <Button
@@ -35,7 +36,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:cornerRadius="12dp"
-        android:backgroundTint="@color/black"
+        android:layout_marginHorizontal="3dp"
+        android:backgroundTint="@color/white"
         android:layout_weight="1" />
 
     <Button
@@ -43,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:cornerRadius="12dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:layout_weight="1" />
 
 </LinearLayout>
