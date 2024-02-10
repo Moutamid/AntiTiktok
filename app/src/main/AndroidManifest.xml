@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -38,6 +39,7 @@
                 android:resource="@xml/accessibilityservice" />
         </service>
         <service
+            android:foregroundServiceType="specialUse"
             android:name=".ForegroundService"
             android:enabled="true"
             android:exported="true" />

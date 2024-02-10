@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat;
 
 public class ForegroundService extends Service {
 
-
+    public static Window window;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,7 +33,7 @@ public class ForegroundService extends Service {
 
         // create an instance of Window class
         // and display the content on screen
-        Window window=new Window(this);
+        window = new Window(this);
         window.open();
     }
 
