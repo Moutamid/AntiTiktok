@@ -36,6 +36,8 @@ public class MotionService extends AccessibilityService {
     boolean homeScroll = true;
     boolean isClicked = false;
     int distance, lastDistance = 0;
+    int counter = 0;
+
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -53,8 +55,17 @@ public class MotionService extends AccessibilityService {
 
             new Handler().postDelayed(() -> {
                 if (Window.counter != null) {
-                    int i = Integer.parseInt(Window.counter.getText().toString());
-                    Window.counter.setText(String.valueOf(i + 1));
+                    counter++;
+                    String[] s = Window.counter.getText().toString().split(" - "); // 0 - 0
+                    int i = Integer.parseInt(s[0]);
+                    if (counter < 5) {
+                        Window.counter.setVisibility(View.GONE);
+                    } else {
+                        Window.counter.setVisibility(View.VISIBLE);
+                        int count = i + 1;
+                        int cen = (count * 3);
+                        Window.counter.setText(count + " - " + cen + " centimeter");
+                    }
                 }
 
                 Window.canva.setOnTouchListener(new View.OnTouchListener() {
@@ -77,7 +88,7 @@ public class MotionService extends AccessibilityService {
                         if (e.getAction() == MotionEvent.ACTION_UP) {
                             Log.d(TAG, "onUP: X " + location[0]);
                             Log.d(TAG, "onUP: Y " + location[1]);
-                            if (isClicked){
+                            if (isClicked) {
                                 new Handler().postDelayed(() -> clickButton(), 300);
                             } else {
                                 distance = location[1] - (int) e.getY();
@@ -222,7 +233,8 @@ public class MotionService extends AccessibilityService {
                 AccessibilityNodeInfo child = event.getSource().getChild(i);
                 if (child != null && canChildScroll(child)) {
                     Point position = new Point();
-                    position.x = getResources().getDisplayMetrics().widthPixels / 2;
+                    position.x = 5;
+//                    position.x = getResources().getDisplayMetrics().widthPixels / 2;
                     position.y = getResources().getDisplayMetrics().heightPixels / 2;
                     GestureDescription.Builder builder = new GestureDescription.Builder();
                     Path path = new Path();
