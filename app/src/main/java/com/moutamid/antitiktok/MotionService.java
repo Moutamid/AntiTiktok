@@ -68,42 +68,40 @@ public class MotionService extends AccessibilityService {
                     }
                 }
 
-                Window.canva.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent e) {
-                        if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                            location[0] = (int) e.getX();
-                            location[1] = (int) e.getY();
-                            Log.d(TAG, "onTouch: X " + location[0]);
-                            Log.d(TAG, "onTouch: Y " + location[1]);
-                            Window.canva.setVisibility(View.GONE);
-                            isClicked = true;
-                        }
-                        if (e.getAction() == MotionEvent.ACTION_MOVE) {
-                            Log.d(TAG, "onMOVE: X " + location[0]);
-                            Log.d(TAG, "onMOVE: Y " + location[1]);
-                            isClicked = false;
-                            Window.canva.setVisibility(View.GONE);
-                        }
-                        if (e.getAction() == MotionEvent.ACTION_UP) {
-                            Log.d(TAG, "onUP: X " + location[0]);
-                            Log.d(TAG, "onUP: Y " + location[1]);
-                            if (isClicked) {
-                                new Handler().postDelayed(() -> clickButton(), 300);
-                            } else {
-                                distance = location[1] - (int) e.getY();
-                                Log.d(TAG, "distance: Y " + distance);
-                                scrollWindow(event);
-                            }
-                            new Handler().postDelayed(() -> {
-                                Window.canva.setVisibility(View.VISIBLE);
-                            }, 2000);
-                        }
-                        if (e.getAction() == MotionEvent.ACTION_CANCEL) {
-
-                        }
-                        return true;
+                Window.canva.setOnTouchListener((v, e) -> {
+                    if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                        location[0] = (int) e.getX();
+                        location[1] = (int) e.getY();
+                        Log.d(TAG, "onTouch: X " + location[0]);
+                        Log.d(TAG, "onTouch: Y " + location[1]);
+                        Window.canva.setVisibility(View.GONE);
+                        isClicked = true;
                     }
+                    if (e.getAction() == MotionEvent.ACTION_MOVE) {
+                        Log.d(TAG, "onMOVE: X " + location[0]);
+                        Log.d(TAG, "onMOVE: Y " + location[1]);
+                        isClicked = false;
+                        Window.canva.setVisibility(View.GONE);
+                    }
+                    if (e.getAction() == MotionEvent.ACTION_UP) {
+                        Log.d(TAG, "onUP: X " + location[0]);
+                        Log.d(TAG, "onUP: Y " + location[1]);
+                        Window.canva.performClick();
+                        if (isClicked) {
+                            new Handler().postDelayed(() -> clickButton(), 300);
+                        } else {
+                            distance = location[1] - (int) e.getY();
+                            Log.d(TAG, "distance: Y " + distance);
+                            scrollWindow(event);
+                        }
+                        new Handler().postDelayed(() -> {
+                            Window.canva.setVisibility(View.VISIBLE);
+                        }, 2000);
+                    }
+                    if (e.getAction() == MotionEvent.ACTION_CANCEL) {
+                        Log.d(TAG, "onAccessibilityEvent: Cancel");
+                    }
+                    return true;
                 });
 
                 Window.btn1.setOnClickListener(v -> {
